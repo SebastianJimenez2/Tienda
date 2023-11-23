@@ -1,5 +1,5 @@
 Pants,
-Shirts
+Shirts,
 Tshirts,
 Tracksuits,
 Tights,
