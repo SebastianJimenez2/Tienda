@@ -4,65 +4,15 @@
     if(!isset($_SESSION["nombre"]) && !isset($_SESSION["clave"])){
         header("Location:index.php");
     }
-    
-    if(!isset($_COOKIE["idioma"])){
-        $file_es = "categorias_es.txt";
-        $fp_es = fopen($file_es, "r");
-        $contents_es = fread($fp_es, filesize($file_es));
-        
-        if($_GET["idioma"] == "es" && isset($_GET["idioma"])){
-            $file_es = "categorias_es.txt";
-            $fp_es = fopen($file_es, "r");
-            $contents_es = fread($fp_es, filesize($file_es));
-            header("panelPrincipal.php?idioma=es");
-        }
-    
-        if($_GET["idioma"] == "en" && isset($_GET["idioma"])){
-            $file_en = "categorias_en.txt";
-            $fp_en = fopen($file_en, "r");
-            $contents_en = fread($fp_en, filesize($file_en));
-            header("panelPrincipal.php?idioma=en");
-        }
-    } else {
-        if($_COOKIE["idioma"] == "es"){
-            $file_es = "categorias_es.txt";
-            $fp_es = fopen($file_es, "r");
-            $contents_es = fread($fp_es, filesize($file_es));
-        }
-    
-        if($_COOKIE["idioma"] == "en"){
-            $file_en = "categorias_en.txt";
-            $fp_en = fopen($file_en, "r");
-            $contents_en = fread($fp_en, filesize($file_en));
-        }
-    }
-/*
-    if(isset($_GET["idioma"])){
-        if($_GET["idioma"] == "es"){
-            $_COOKIE["idioma"] == "es";
-            setcookie("idioma", "es");
-            header("panelPrincipal.php?idioma=es");
-        } 
 
-        if($_GET["idioma"] == "en"){
-            $_COOKIE["idioma"] == "en";
-            setcookie("idioma", "en");
-            header("panelPrincipal.php?idioma=en");
-        } 
-    }
+    $file_es = "categorias_es.txt";
+    $fp_es = fopen($file_es, "r");
+    $contents_es = fread($fp_es, filesize($file_es));
 
-    if($_COOKIE["idioma"] == "es"){
-        $file_es = "categorias_es.txt";
-        $fp_es = fopen($file_es, "r");
-        $contents_es = fread($fp_es, filesize($file_es));
-    }
-
-    if($_COOKIE["idioma"] == "en"){
-        $file_en = "categorias_en.txt";
-        $fp_en = fopen($file_en, "r");
-        $contents_en = fread($fp_en, filesize($file_en));
-    }
-*/
+    $file_en = "categorias_en.txt";
+    $fp_en = fopen($file_en, "r");
+    $contents_en = fread($fp_en, filesize($file_en));
+    
     $nombre = $_SESSION['nombre'];
     $clave = $_SESSION['clave'];
 ?>
@@ -83,12 +33,37 @@
         <a href="panelPrincipal.php?idioma=en">EN (Ingles)</a>
 
         <?php
-        echo $contents_es; 
-        if($_GET["idioma"] == "es" && isset($_GET["idioma"])) {
-            echo $contents_es; 
-        } 
-        if($_GET["idioma"] == "en" && isset($_GET["idioma"])) {
-            echo $contents_en;
+        if(!isset($_GET["idioma"])){
+            if(isset($_COOKIE["idioma"])&&$_COOKIE["idioma"]!=""){
+                if($_COOKIE["idioma"] == "es"){
+                    header("Location:panelPrincipal.php?idioma=es");
+                }else if($_COOKIE["idioma"] == "en"){
+                    header("Location:panelPrincipal.php?idioma=en");
+                }
+            }else{
+                echo "<h3>Lista de productos</h3>";
+                foreach(explode("\n",$contents_es) as $name => $value){
+                    echo $value."<br>"; 
+                }
+            }
+        }else{
+            if($_GET["idioma"]=="es"){
+                if(isset($_COOKIE["idioma"])){
+                    setcookie("idioma", "es");
+                }
+                echo "<h3>Lista de productos</h3>";
+                foreach(explode("\n",$contents_es) as $name => $value){
+                    echo $value."<br>"; 
+                }
+            }else if($_GET["idioma"]=="en"){
+                if(isset($_COOKIE["idioma"])){
+                    setcookie("idioma", "en");
+                }
+                echo "<h3>Product list</h3>";
+                foreach(explode("\n",$contents_en) as $name => $value){
+                    echo $value."<br>"; 
+                }
+            }
         }
         ?>
 
