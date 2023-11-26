@@ -1,6 +1,5 @@
 <?php
-#borrarcookies.php?borrar=1
-session_start(); #levnatar el servicio de sesiones del servidor 
+session_start(); #levantar el servicio de sesiones del servidor 
 
 if(isset($_POST['nombre']) && isset($_POST['clave']) && $_POST["nombre"] != "" && $_POST["clave"] != "") {
     $recordarme = isset($_POST['chkRecordarme']) ? $_POST['chkRecordarme'] : '';
@@ -8,14 +7,11 @@ if(isset($_POST['nombre']) && isset($_POST['clave']) && $_POST["nombre"] != "" &
     $_SESSION["nombre"] = $_POST["nombre"];
     $_SESSION["clave"] = $_POST["clave"];
 
-    
-
     if($recordarme != "") {
         setcookie("nombre", $_SESSION["nombre"]);
         setcookie("clave", $_SESSION["clave"]);
         setcookie("chkRecordarme", $recordarme);
         if(!isset($_COOKIE["idioma"])) {
-            $idioma = "es";
             setcookie("idioma", $idioma); 
         }
     } else {
