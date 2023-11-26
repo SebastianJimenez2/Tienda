@@ -27,7 +27,7 @@
                 Clave:<br>
                 <input type="password" value="<?php echo $clave ?>" name="clave"/><br>
                 <br>
-                <input type="checkbox" name="chkRecordarme"> Recordarme?
+                <input type="checkbox" name="chkRecordarme"> <?php echo ($recordarme)?"checked" : "" ?>> Recordarme?
                 <br>
                 <br>
                 <input type="submit" value="Enviar"/><br>
